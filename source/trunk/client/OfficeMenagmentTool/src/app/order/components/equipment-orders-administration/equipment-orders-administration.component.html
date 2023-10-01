@@ -1,0 +1,166 @@
+<p-toast position="bottom-right" [key]="toastKey"></p-toast>
+<p-confirmDialog [style]="{ 'width': '25vw' }"></p-confirmDialog>
+<div class="row my-4">
+    <div class="col">
+        <p-table 
+            #equipmentTable
+            class="card" 
+            dataKey="id" 
+            [paginator]="totalRecords > pageSize" 
+            [rows]="pageSize" 
+            [totalRecords]="totalRecords" 
+            [(first)]="first" 
+            [value]="orders" 
+            (onLazyLoad)="lazyLoadEquipmentOrders($event)" 
+            [lazy]="true" 
+            [loading]="loading" 
+            [globalFilterFields]="['name']" 
+            styleClass="p-datatable-sm" 
+            [showLoader]="false" 
+            [metaKeySelection]="true" 
+            selectionMode="single" 
+            (onRowSelect)="openEquipmentOrder($event)">
+    <ng-template pTemplate="caption">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <button pButton [label]="'Common.ClearLabel' | translate" class="p-button-outlined" icon="pi pi-filter-slash" title="Clear all filters" (click)="clearFilters(equipmentTable)"></button>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th *ngIf="!forCurrentUserOnly" pSortableColumn="name">{{'Common.UserLabel' | translate}}<p-sortIcon field="name" ></p-sortIcon></th>
+            <th pSortableColumn="item">{{'ProductAdministration.ItemLabel' | translate}}<p-sortIcon field="item" ></p-sortIcon></th>
+            <th pSortableColumn="description">{{'OrderAdministration.DescriptionLabel' | translate}}<p-sortIcon field="description" ></p-sortIcon></th>
+            <th>{{'OrderAdministration.StateLabel' | translate}}</th> 
+            <th pSortableColumn="dateCreated">{{'OrderAdministration.DateCreatedLabel' | translate}}<p-sortIcon field="dateCreated" ></p-sortIcon></th>
+        </tr>
+        <tr>
+            <th *ngIf="!forCurrentUserOnly">
+                <p-columnFilter type="text" field="name" (input)="filterOrders($event, equipmentTable, 'name')" [matchModeOptions]="[]" [matchMode]="matchMode"></p-columnFilter>
+            </th>
+            <th>
+                <p-columnFilter type="text" field="item" (input)="filterOrders($event, equipmentTable, 'item')" [matchModeOptions]="[]" [matchMode]="matchMode"></p-columnFilter>
+            </th>
+            <th>
+                <p-columnFilter type="text" field="description" (input)="filterOrders($event, equipmentTable, 'description')" [matchModeOptions]="[]" [matchMode]="matchMode"></p-columnFilter>
+            </th>
+            <th>
+                <p-multiSelect [(ngModel)]="selectedStates" appendTo="body" [options]="orderStates" optionLabel="name" [selectedItemsLabel]="'{0} ' + ('OrderAdministration.SelectStateLabel' | translate)" [maxSelectedLabels]="1" (onChange)="filterByStates(equipmentTable)">
+                    <ng-template let-option pTemplate="selectedItems">  
+                        <span *ngIf="option == null || option.length < 1">&nbsp;</span>
+                        <span *ngIf="option != null && option.length == 1">{{ 'OrderAdministration.' + option[0].name | translate }}</span>
+                        <span *ngIf="option != null && option.length > 1">{{ option.length + ' ' + ('OrderAdministration.SelectStateLabel' | translate) }}</span>
+                    </ng-template>
+                    <ng-template let-option pTemplate="item">
+                        <span>{{'OrderAdministration.' + option.name | translate}}</span>
+                    </ng-template>
+                </p-multiSelect>
+            </th>
+            <th> </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-order let-i="rowIndex">
+        <tr [pSelectableRow]="order">
+            <td *ngIf="!forCurrentUserOnly">{{ order.user.firstName + " " + order.user.lastName }}</td>
+            <td>{{ order.item.name }}</td>
+            <td *ngIf="!forCurrentUserOnly">{{ (order.description | slice:0:40) }}<span [hidden]="order.description.length <= 40">...</span></td>
+            <td *ngIf="forCurrentUserOnly">{{ (order.description | slice:0:80) }}<span [hidden]="order.description.length <= 80">...</span></td>
+            <td class="text-center"> <p-chip [ngClass]="{ 'pending-chip' : order.state == orderState.Pending, 'in-progress-chip' : order.state == orderState.InProgress, 'done-chip' : order.state == orderState.Done, 'canceled-chip' : order.state == orderState.Canceled }" label="{{ 'OrderAdministration.' + orderStates[order.state].name | translate }}"></p-chip></td>
+            <td>{{ order.dateCreated | date:'dd.MM.yyyy HH:mm' }}</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="loadingbody">
+        <tr>
+            <td *ngIf="!forCurrentUserOnly"><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td *ngIf="!forCurrentUserOnly"><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td *ngIf="!forCurrentUserOnly"><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td *ngIf="!forCurrentUserOnly"><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td *ngIf="!forCurrentUserOnly"><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td *ngIf="!forCurrentUserOnly"><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td *ngIf="!forCurrentUserOnly"><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td *ngIf="!forCurrentUserOnly"><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td *ngIf="!forCurrentUserOnly"><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td *ngIf="!forCurrentUserOnly"><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td *ngIf="!forCurrentUserOnly"><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td *ngIf="!forCurrentUserOnly"><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td *ngIf="!forCurrentUserOnly"><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+        </tr>
+    </ng-template>
+</p-table>

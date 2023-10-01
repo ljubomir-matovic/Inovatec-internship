@@ -1,0 +1,17 @@
+<div *ngIf="loading" class="d-flex align-items-center justify-content-center min-height-100">
+  <img src="/assets/loader.gif" width="200">
+</div>
+<div class="mt-4 mb-4" *ngIf="!loading">
+  <div *ngIf="!isError" class="lg-font">
+    <p class="text-center">
+      {{ 'OrderAdministration.OrderAccepted' | translate }}
+      <a [routerLink]="'/order/' + orderId">{{ 'OrderAdministration.Here' | translate }}.</a>
+    </p>
+  </div>
+  <div *ngIf="isError" class="lg-font">
+    <p class="text-center">{{ errorMessage | translate}}</p>
+  </div>
+  <div class="d-flex justify-content-center mb-3">
+    <img [src]="'/assets/' + (isError? 'error': 'success') + '-icon.png'" width="120" alt="status">
+  </div>
+</div>

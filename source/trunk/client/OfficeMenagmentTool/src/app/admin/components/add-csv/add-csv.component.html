@@ -1,0 +1,13 @@
+<div [ngBusy]="{busy: busy, template: BusyLoaderComponent, backdrop: true, templateNgStyle: { 'background-color': 'white', 'display': 'grid', 'place-items': 'center' }}"></div>
+<form class="mb-2">
+    <p-fileUpload [multiple]="false" #fileUploadComponent [customUpload]="true" (uploadHandler)="uploadFiles($event, fileUploadComponent)" [fileLimit]="1" accept=".csv" [maxFileSize]="100000000">
+        <ng-template pTemplate="toolbar">
+            <button pButton label="CSV template" icon="pi pi-download" (click)="getCSVTemplate()"></button>
+        </ng-template>
+        <ng-template pTemplate="content">
+            <ul *ngIf="uploadedFiles.length">
+                <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} {{ 'Common.BytesLabel' | translate}}</li>
+            </ul>
+        </ng-template>
+    </p-fileUpload>
+</form>

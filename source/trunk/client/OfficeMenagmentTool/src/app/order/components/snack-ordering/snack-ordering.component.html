@@ -1,0 +1,244 @@
+<p-toast position="bottom-right" [key]="toastKey"></p-toast>
+<p-confirmDialog [style]="{ width: '25vw' }"></p-confirmDialog>
+<div class="row my-4 gap-5 gap-xl-0">
+  <div class="col-12 col-xl-7">
+    <p-dataView
+      #snacksDataView
+      class="card"
+      dataKey="id"
+      [paginator]="totalSnacks > pageSize"
+      [rows]="pageSize"
+      [totalRecords]="totalSnacks"
+      [value]="snacks"
+      [lazy]="true"
+      [loading]="loadingAllSnacks"
+      (onLazyLoad)="lazyLoadSnacks($event)"
+      styleClass="p-datatable-sm"
+      filterBy="category"
+      emptyMessage=" ">
+      <ng-template pTemplate="header">
+          <div class="d-flex flex-row align-items-center justify-content-between">
+              <p-multiSelect [placeholder]="'Common.CategoryLabel' | translate" [options]="categories" [(ngModel)]="selectedCategories" optionValue="id" optionLabel="name" [selectedItemsLabel]="'{0} ' + ('ProductAdministration.SelectCategoryLabel' | translate) " [maxSelectedLabels]="1" (onChange)="filterSnacks()">
+                  <ng-template let-option pTemplate="item">
+                      <div class="inline-block vertical-align-middle">
+                          <span class="vertical-align-middle">{{ option.name }}</span>
+                      </div>
+                  </ng-template>
+              </p-multiSelect>
+          </div>
+      </ng-template>
+      <ng-template let-snack pTemplate="listItem">
+        <div class="snackItem col-12 d-flex flex-column flex-xxl-row align-items-center justify-content-between px-4 py-2 gap-4">
+          <div class="d-flex flex-column align-items-center align-items-xxl-start gap-2">
+            <h3 class="text-center text-sm-start m-0">{{snack.name}}</h3>
+            <p-chip class="p-category-chip" [label]="snack.category.name" icon="pi pi-tag"></p-chip>
+          </div>
+          <div class="d-flex flex-column flex-sm-row align-items-center gap-2">
+            <button pButton class="p-button-outlined" [label]="'OrderAdministration.Buy1Label' | translate" icon="pi pi-shopping-cart" [disabled]="ordering" (click)="addSelectedSnack(snack, 1)"> </button>
+            <p-divider class="d-none d-sm-block" [align]="'center'" layout="vertical">{{'OrderAdministration.ORLabel' | translate}}</p-divider>
+            <p-divider class="d-block d-sm-none w-100" [align]="'center'" layout="horizontal">{{'OrderAdministration.ORLabel' | translate}}</p-divider>
+            <div class="d-flex flex-column align-items-stretch justify-content-center gap-2">
+              <div class="d-flex flex-row align-items-center gap-2">
+                <p-inputNumber #amountInput inputId="integeronly" [min]="0" placeholder="0"> </p-inputNumber>
+                <button pButton class="p-button-outlined" [disabled]="amountInput.value <= 0 || amountInput.value == undefined || ordering" icon="pi pi-shopping-cart" (click)="addSelectedSnack(snack, amountInput.value, amountInput)"> </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-dataView>
+  </div>
+  <div class="col-12 col-xl-5">
+    <p-tabView styleClass="card">
+      <p-tabPanel>
+          <ng-template pTemplate="header">
+              <i class="pi pi-shopping-cart"></i>
+              &nbsp;
+              <span>{{'OrderAdministration.MyCartLabel' | translate}}</span>
+          </ng-template>
+          <p-table
+            #mySnackOrdersTable
+            [value]="mySnackOrders"
+            [scrollable]="true"
+            scrollHeight="flex"
+            styleClass="mb-2 p-datatable-sm"
+            [loading]="loadingMySnackOrders"
+            [lazy]="true"
+            [showLoader]="false"
+            [totalRecords]="totalMySnacks"
+            [rows]="mySnacksPageSize"
+            [paginator]="totalMySnacks > mySnacksPageSize"
+            (onLazyLoad)="lazyLoadMySnackOrders($event)"
+            >
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="5">
+                  <div class="d-flex justify-content-center">
+                    <p class="text-center mb-0">{{ 'Common.TableEmpty' | translate }}</p>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="header" >
+                <tr>
+                    <th> {{'OrderAdministration.SnackLabel' | translate}} </th>
+                    <th> {{'OrderAdministration.AmountLabel' | translate}} </th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-snackOrder>
+                <tr [pEditableColumn]="snackOrder.amount" pEditableColumnField="amount">
+                  <td>
+                    {{snackOrder.item.name}}
+                  </td>
+                  <td>
+                    {{ snackOrder.amount }}
+                  </td>
+                  <td>
+                    <button pButton class="p-button-sm p-button-outlined" icon="pi pi-trash"[pTooltip]="'Common.DeleteLabel' | translate" tooltipPosition="bottom" (click)="showDeleteSelectedSnackDialog(snackOrder.id)"></button>
+                  </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="loadingbody">
+              <tr>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+              </tr>
+              <tr>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+              </tr>
+              <tr>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+              </tr>
+              <tr>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+              </tr>
+              <tr>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+              </tr>
+              <tr>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+              </tr>
+              <tr>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+              </tr>
+              <tr>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+              </tr>
+              <tr>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+              </tr>
+              <tr>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+              </tr>
+            </ng-template>
+          </p-table>
+      </p-tabPanel>
+      <p-tabPanel>
+        <ng-template pTemplate="header">
+            <i class="pi pi-list"></i>
+            &nbsp;
+            <span>{{'OrderAdministration.OfficeCartLabel' | translate}}</span>
+        </ng-template>
+        <p-table
+          #officeCartTable
+          [value]="officeOrders"
+          [scrollable]="true"
+          [loading]="loadingOfficeOrders"
+          [lazy]="true"
+          [totalRecords]="totalOfficeOrders"
+          [paginator]="totalOfficeOrders > officeOrdersPageSize"
+          [rows]="officeOrdersPageSize"
+          (onLazyLoad)="lazyLoadOfficeSnacks($event)"
+          scrollHeight="flex"
+          [showLoader]="false">
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="5">
+                <div class="d-flex justify-content-center">
+                  <p class="text-center mb-0">{{ 'Common.TableEmpty' | translate }}</p>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="header">
+              <tr>
+                  <th>{{'OrderAdministration.SnackLabel' | translate}}</th>
+                  <th>{{'OrderAdministration.AmountLabel' | translate}}</th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-order>
+              <tr [pEditableColumn]="order.amount" pEditableColumnField="amount">
+                <td>{{order.item.name}}</td>
+                <td>{{order.amount}} </td>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="loadingbody">
+            <tr>
+              <td><p-skeleton height="30px"></p-skeleton></td>
+              <td><p-skeleton height="30px"></p-skeleton></td>
+            </tr>
+            <tr>
+              <td><p-skeleton height="30px"></p-skeleton></td>
+              <td><p-skeleton height="30px"></p-skeleton></td>
+            </tr>
+            <tr>
+              <td><p-skeleton height="30px"></p-skeleton></td>
+              <td><p-skeleton height="30px"></p-skeleton></td>
+            </tr>
+            <tr>
+              <td><p-skeleton height="30px"></p-skeleton></td>
+              <td><p-skeleton height="30px"></p-skeleton></td>
+            </tr>
+            <tr>
+              <td><p-skeleton height="30px"></p-skeleton></td>
+              <td><p-skeleton height="30px"></p-skeleton></td>
+            </tr>
+            <tr>
+              <td><p-skeleton height="30px"></p-skeleton></td>
+              <td><p-skeleton height="30px"></p-skeleton></td>
+            </tr>
+            <tr>
+              <td><p-skeleton height="30px"></p-skeleton></td>
+              <td><p-skeleton height="30px"></p-skeleton></td>
+            </tr>
+            <tr>
+              <td><p-skeleton height="30px"></p-skeleton></td>
+              <td><p-skeleton height="30px"></p-skeleton></td>
+            </tr>
+            <tr>
+              <td><p-skeleton height="30px"></p-skeleton></td>
+              <td><p-skeleton height="30px"></p-skeleton></td>
+            </tr>
+            <tr>
+              <td><p-skeleton height="30px"></p-skeleton></td>
+              <td><p-skeleton height="30px"></p-skeleton></td>
+            </tr>
+          </ng-template>
+        </p-table>
+        <div class="d-flex justify-content-end mt-3 pb-3" *ngIf="storageService.getUserData()!.role == role.HR">
+          <button pButton [disabled]="officeOrders.length == 0"  [label]="'OrderAdministration.CreateOrder' | translate" (click)="createOrder()"></button>
+        </div>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+</div>

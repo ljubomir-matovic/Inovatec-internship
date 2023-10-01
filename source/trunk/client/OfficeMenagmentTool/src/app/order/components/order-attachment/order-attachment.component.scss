@@ -1,0 +1,23 @@
+.attachment {
+  padding: 20px;
+}
+
+.delete-icon-container{
+  width: 30px;
+  height: 30px;
+}
+
+.delete-icon {
+  font-size: 20px;
+  color: red;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.text-elipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

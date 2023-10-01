@@ -1,0 +1,14 @@
+IF (
+	EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='dbo' AND TABLE_NAME='OrderRequest' AND COLUMN_NAME='OfficeId')
+)
+BEGIN
+	ALTER TABLE [dbo].[OrderRequest]
+	ADD [OfficeId] [bigint] NULL
+
+	ALTER TABLE [dbo].[OrderRequest]
+	ADD CONSTRAINT [FK_Order_Office] FOREIGN KEY
+	(
+		[OfficeId]
+	)
+	REFERENCES [Office]([Id])
+END

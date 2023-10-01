@@ -1,0 +1,17 @@
+import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+export class AppComponent implements OnInit {
+  title = 'Office management tool';
+
+  constructor(private translateService:TranslateService){}
+
+  ngOnInit(): void {
+    this.translateService.setDefaultLang("en");
+  }
+}

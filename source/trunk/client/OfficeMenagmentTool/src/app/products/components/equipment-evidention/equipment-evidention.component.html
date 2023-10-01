@@ -1,0 +1,13 @@
+<p-confirmDialog></p-confirmDialog>
+<div class="d-flex flex-column flex-lg-row align-items-stretch w-100 h-100">
+  <app-equipment-unassigned class="w-100"></app-equipment-unassigned>
+
+  <div class="d-flex flex-row flex-lg-column align-items-center justify-content-center gap-5 px-3">
+    <button class="d-none d-lg-flex" pButton [loading]="assignLoading" (click)="assign()" icon="pi pi-chevron-right" [pTooltip]="'Equipment.AssignLabel' | translate" [disabled]="selectedUserId == null"> </button>
+    <button class="d-flex d-lg-none" pButton [loading]="assignLoading" (click)="assign()" icon="pi pi-chevron-down" [pTooltip]="'Equipment.AssignLabel' | translate" [disabled]="selectedUserId == null"> </button>
+    <button class="d-none d-lg-flex" pButton [loading]="unassignLoading" (click)="unassign()" icon="pi pi-chevron-left" [pTooltip]="'Equipment.UnassignLabel' | translate"> </button>
+    <button class="d-flex d-lg-none" pButton [loading]="unassignLoading" (click)="unassign()" icon="pi pi-chevron-up" [pTooltip]="'Equipment.UnassignLabel' | translate"> </button>
+  </div>
+
+  <app-equipment-assigned class="w-100"></app-equipment-assigned>
+</div>

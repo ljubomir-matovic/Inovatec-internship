@@ -1,0 +1,15 @@
+.pointer {
+  cursor: pointer;
+}
+
+:host ::ng-deep {
+  .notification-group {
+    app-notification:not(:last-of-type)::after {
+      content: "";
+      display: block;
+      height: 1px;
+      width: 100%;
+      border-bottom: 2px solid rgb(202, 202, 202);
+    }
+  }
+}

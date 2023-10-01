@@ -1,0 +1,20 @@
+<p-toast></p-toast>
+<p-confirmDialog [style]="{ 'minWidth': '50vw' }" [key]="confirmDialogKey"></p-confirmDialog>
+<button pButton (click)="showDialog()" icon="pi pi-plus" [label]="'OrderAdministration.AddAttachment' | translate"></button>
+<p-dialog [header]="'OrderAdministration.AddAttachment' | translate" [(visible)]="uploadDialogVisible" [modal]="true" [style]="{ width: '50vw' }" (onHide)="hideDialog()" [draggable]="false" [resizable]="false">
+  <div [ngBusy]="{busy: busy, template: BusyLoaderComponent, backdrop: true, templateNgStyle: { 'background-color': 'white', 'display': 'grid', 'place-items': 'center' }}"></div>
+  <form class="mb-3">
+    <p-fileUpload [multiple]="true" #file [customUpload]="true" accept=".png,.jpg,.tiff,.docx,.odt,.pdf,.doc"
+    (uploadHandler)="uploadFiles($event,file)">
+    </p-fileUpload>
+  </form>
+</p-dialog>
+<div class="mb-3">&nbsp;</div>
+<div *ngIf="loading" class="d-flex align-items-center justify-content-center min-height-100">
+  <img src="assets/loader.gif" width="200px">
+</div>
+<div class="d-flex flex-wrap flex-row gap-5 mb-5" *ngIf="!loading">
+  <app-order-attachment *ngFor="let attachment of attachments" [attachment]="attachment"
+  (onClick)="openFile($event)" (onDelete)="deleteFile($event)"></app-order-attachment>
+</div>
+<p class="text-center mb-5" *ngIf="!loading && attachments.length == 0">{{ 'OrderAdministration.NoAttachment' | translate }}</p>

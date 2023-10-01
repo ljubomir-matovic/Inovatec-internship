@@ -1,0 +1,23 @@
+@import "/src/variables";
+
+.field:not(.error){
+  visibility: hidden;
+}
+
+.error{
+  color:$errorMessageColor;
+}
+
+form.create-equipment{
+  display: flex;
+  flex-direction: column;
+  gap:10px;
+  padding: 20px 0;
+  min-width: 10vw;
+}
+
+:host ::ng-deep{
+  form.create-equipment div.p-dropdown.p-component.p-dropdown-clearable{
+    width: 100%;
+  }
+}

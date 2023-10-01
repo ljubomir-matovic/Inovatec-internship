@@ -1,0 +1,154 @@
+<div #orderContainer class="d-flex flex-column p-2">
+    <div class="d-flex flex-start align-items-center justify-content-between mb-3">
+        <div class="d-flex flex-start align-items-center">
+            <div>
+                <h5 class="mb-1"> {{ order.user.firstName + " " + order.user.lastName }} </h5>
+                <p class="text-muted small mb-0">
+                    {{ order.dateCreated | date: 'dd.MM.yyyy hh:mm' }}
+                </p>
+            </div>
+        </div>
+        <div class="h-separator"></div>
+        <div class="d-flex flex-start align-items-center justify-content-between gap-3">
+            <p-dropdown *ngIf="storageService.userAuthenticated(UserRole.HR, UserRole.Admin)" (onChange)="changeState()" appendTo="body" [options]="orderStates" [(ngModel)]="selectedState" optionLabel="name" optionValue="id">
+                <ng-template let-option pTemplate="selectedItem">
+                    <span class="vertical-align-middle">{{'OrderAdministration.' + option.name | translate}}</span>
+                </ng-template>
+                <ng-template let-option pTemplate="item">
+                    <span class="vertical-align-middle">{{'OrderAdministration.' + option.name | translate}}</span>
+                </ng-template>
+            </p-dropdown>
+            <p-chip *ngIf="storageService.userAuthenticated(UserRole.OrdinaryEmployee)" [ngClass]="{ 'pending-chip' : order.state == orderState.Pending, 'in-progress-chip' : order.state == orderState.InProgress, 'done-chip' : order.state == orderState.Done, 'canceled-chip' : order.state == orderState.Canceled }" [label]=" 'OrderAdministration.' + orderStates[order.state!].name | translate"></p-chip>
+        </div>
+    </div>
+    <p><i>{{('OrderAdministration.OrderingLabel' | translate)}}:</i> <b>{{ ' ' + order.item!.name }}</b></p>
+    <p-divider>{{'OrderAdministration.DescriptionLabel' | translate}}</p-divider>
+    <p class="description my-0">{{ order.description }}</p>
+    <p-divider></p-divider>
+    <div class="card-footer py-3 mb-0">
+        <h5>{{'Comments.AddComment' | translate}}</h5>
+        <div class="d-flex flex-start w-100">
+            <div class="form-outline w-100">
+                <textarea class="w-100" rows="5" cols="70" maxlength="500" pInputTextarea [autoResize]="true" [(ngModel)]="newCommentText" [disabled]="loadingNewComment"></textarea>
+            </div>
+        </div>
+        <div class="float-end mt-2 pt-1">
+            <button pButton [label]="'Comments.PostComment' | translate" (click)="addComment()" [loading]="loadingNewComment" [disabled]="newCommentText.trim() == ''"> </button>
+        </div>
+    </div>
+    <p-divider>
+        <h5>{{ 'Comments.CommentsLabel' | translate}}</h5>
+    </p-divider>
+    <p-dataView
+        #commentsScroller
+        dataKey="id"
+        [value]="comments">
+        <ng-template let-comment pTemplate="listItem">
+            <div *ngIf="comment.type == commentTypes.Regular" class="card p-2 mb-2">
+                <div class="d-flex flex-center justify-content-between">
+                    <div class="d-flex flex-start align-items-center">
+                        <div>
+                            <h6 class="fw-bold mb-1">
+                                {{ comment.user.firstName + " " + comment.user.lastName }}
+                            </h6>
+                            <p>
+                                {{ comment.dateCreated | date: 'dd.MM.yyyy hh:mm' }}
+                            </p>
+                        </div>
+                    </div>
+                    <div #actionSection>
+                        <button pButton icon="pi pi-pencil" *ngIf="storageService.userAuthenticated(UserRole.HR, UserRole.Admin) || storageService.checkIsCurrentUser(comment.user.id)" (click)="showCommentEditSection(actionSection, editSection, commentElement);" [label]="'Common.EditLabel' | translate" class="p-button-secondary p-button-text"></button>
+                        <button pButton icon="pi pi-trash" *ngIf="storageService.userAuthenticated(UserRole.HR, UserRole.Admin) || storageService.checkIsCurrentUser(comment.user.id)" (click)="showCommentDeleteConfirm(comment.id)" [label]="'Common.DeleteLabel' | translate" class="p-button-danger p-button-text"></button>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <p #commentElement class="mt-2 mb-0 comment-text">
+                        {{ comment.text }}
+                    </p>
+                    <div #editSection class="edit-section">
+                        <textarea #commentTextArea class="w-100 m-0" rows="4" cols="70" maxlength="500" pInputTextarea [autoResize]="false">{{ comment.text }}</textarea>
+                        <div class="d-flex justify-content-end align-items-bottom mt-1 gap-2">
+                            <button pButton (click)="hideCommentEditSection(comment, commentTextArea, actionSection, editSection, commentElement)" [label]="'Common.CancelLabel' | translate" class="p-button-secondary p-button-text"></button>
+                            <button pButton (click)="editComment(comment, commentTextArea, actionSection, editSection, commentElement)" [label]="'Common.SaveLabel' | translate"></button>
+                        </div>
+                    </div>
+                </div>
+                <p-divider styleClass="my-0"></p-divider>
+            </div>
+            <div *ngIf="comment.type == commentTypes.StateChange">
+                <div class="d-flex flex-center justify-content-between mt-4">
+                    <div class="d-flex flex-start align-items-center">
+                        <div>
+                            <h6 class="fw-bold mb-1">
+                                {{ comment.user.firstName + " " + comment.user.lastName }}
+                            </h6>
+                            <p>
+                                {{ comment.dateCreated | date: 'dd.MM.yyyy hh:mm' }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <p class="comment-text mb-2">
+                        {{ 'Comments.StateHasBeenChangedTo' | translate }}
+                    </p>
+                    <p-chip [ngClass]="{ 'pending-chip' : comment.orderState! == orderState.Pending, 'in-progress-chip' : comment.orderState! == orderState.InProgress, 'done-chip' : comment.orderState! == orderState.Done, 'canceled-chip' : comment.orderState! == orderState.Canceled }" [label]=" 'OrderAdministration.' + orderStates[comment.orderState].name | translate"></p-chip>
+                </div>
+                <p-divider class="my-0"></p-divider>
+            </div>
+        </ng-template>
+    </p-dataView>
+    <div *ngIf="loadingComments">
+        <div class="p-4 mb-3">
+            <div class="d-flex flex-start align-items-center">
+                <p-skeleton class="me-3" [height]="'48px'" [width]="'48px'" [borderRadius]="'100px'"></p-skeleton>
+                <div>
+                    <h6 class="fw-bold mb-1">
+                        <p-skeleton [height]="'15px'" [width]="'150px'"></p-skeleton>
+                    </h6>
+                    <p class="text-muted small mb-0">
+                        <p-skeleton [height]="'12px'" [width]="'120px'"></p-skeleton>
+                    </p>
+                </div>
+            </div>
+            <div class="d-flex flex-column mt-4 gap-2">
+                <p-skeleton [height]="'20px'"></p-skeleton>
+                <p-skeleton [height]="'20px'"></p-skeleton>
+            </div>
+        </div>
+        <div class="p-4 mb-3">
+            <div class="d-flex flex-start align-items-center">
+                <p-skeleton class="me-3" [height]="'48px'" [width]="'48px'" [borderRadius]="'100px'"></p-skeleton>
+                <div>
+                    <h6 class="fw-bold mb-1">
+                        <p-skeleton [height]="'15px'" [width]="'150px'"></p-skeleton>
+                    </h6>
+                    <p class="text-muted small mb-0">
+                        <p-skeleton [height]="'12px'" [width]="'120px'"></p-skeleton>
+                    </p>
+                </div>
+            </div>
+            <div class="d-flex flex-column mt-4 gap-2">
+                <p-skeleton [height]="'20px'"></p-skeleton>
+                <p-skeleton [height]="'20px'"></p-skeleton>
+            </div>
+        </div>
+        <div class="p-4 mb-3">
+            <div class="d-flex flex-start align-items-center">
+                <p-skeleton class="me-3" [height]="'48px'" [width]="'48px'" [borderRadius]="'100px'"></p-skeleton>
+                <div>
+                    <h6 class="fw-bold mb-1">
+                        <p-skeleton [height]="'15px'" [width]="'150px'"></p-skeleton>
+                    </h6>
+                    <p class="text-muted small mb-0">
+                        <p-skeleton [height]="'12px'" [width]="'120px'"></p-skeleton>
+                    </p>
+                </div>
+            </div>
+            <div class="d-flex flex-column mt-4 gap-2">
+                <p-skeleton [height]="'20px'"></p-skeleton>
+                <p-skeleton [height]="'20px'"></p-skeleton>
+            </div>
+        </div>
+    </div>
+</div>

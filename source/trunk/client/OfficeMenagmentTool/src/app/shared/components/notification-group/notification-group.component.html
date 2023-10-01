@@ -1,0 +1,7 @@
+<div class="notification-group">
+  <app-notification *ngFor="let notification of notifications; let i = index" [index]="i" (onRead)="isRead(i)" [notification]="notification" ></app-notification>
+  <p *ngIf="notifications.length == 0" class="text-center pd-2 pt-3">{{ 'Notification.NoNotifications' | translate }}</p>
+  <div class="d-flex justify-content-center pt-3">
+    <button pButton class="p-button p-button-outlined" *ngIf="haveMore" (click)="getMore()" [label]="'Notification.ShowMore' | translate"></button>
+  </div>
+</div>

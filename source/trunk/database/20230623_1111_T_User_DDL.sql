@@ -1,0 +1,20 @@
+IF(
+	EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='dbo' AND TABLE_NAME='User')
+)
+BEGIN
+
+	IF(
+		NOT EXISTS(SELECT 1 FROM SYS.COLUMNS WHERE Name = 'OfficeId' AND Object_ID = Object_ID('dbo.User'))
+	)
+	BEGIN
+		ALTER TABLE [dbo].[User]
+		ADD [OfficeId] [bigint] NULL
+
+		ALTER TABLE[dbo].[User]
+		ADD CONSTRAINT [FK_User_Office] FOREIGN KEY 
+		(
+			[OfficeId]
+		)
+		REFERENCES [Office]([Id])
+	END
+END

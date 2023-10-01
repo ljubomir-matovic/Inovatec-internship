@@ -1,0 +1,142 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "OfficeMenagmentTool": {
+      "i18n": {
+        "sourceLocale":"en-US",
+        "locales": {
+          "en": {
+            "baseHref": "https://localhost:7192/api/Translate",
+            "translation":"en"
+          },
+          "sr": {
+            "baseHref": "https://localhost:7192/api/Translate",
+            "translation":"sr"
+          }
+        }
+      },
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/office-menagment-tool",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.scss",
+              "node_modules/ng-busy/src/style/busy.css",
+              "node_modules/bootstrap/scss/bootstrap.scss",
+              "primeicons/primeicons.css",
+              "node_modules/bootstrap-icons/font/bootstrap-icons.scss",
+              "primeng/resources/themes/saga-orange/theme.css",
+              "primeng/resources/primeng.min.css"
+            ],
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "localize":true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "OfficeMenagmentTool:build:production"
+            },
+            "development": {
+              "browserTarget": "OfficeMenagmentTool:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "OfficeMenagmentTool:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.scss",
+              "node_modules/ng-busy/src/style/busy.css",
+              "node_modules/bootstrap/scss/bootstrap.scss",
+              "primeicons/primeicons.css",
+              "primeng/resources/themes/saga-orange/theme.css",
+              "primeng/resources/primeng.min.css"
+            ],
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+            ]
+          }
+        }
+      }
+  }
+  },
+  "cli": {
+    "analytics": false
+  }
+}

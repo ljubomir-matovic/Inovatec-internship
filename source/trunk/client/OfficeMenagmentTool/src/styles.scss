@@ -1,0 +1,23 @@
+@import "src/variables";
+
+* {
+    margin: 0px;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.required-star {
+  color: $errorMessageColor;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 430px)
+{
+  .p-toast {
+    width: 90vw !important;
+  }
+}
+
+.no-text-break {
+  white-space: nowrap;
+}

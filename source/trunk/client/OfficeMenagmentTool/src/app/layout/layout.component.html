@@ -1,0 +1,22 @@
+<div class="container-fluid">
+    <app-header [(sidebarVisible)]="sidebarVisible"></app-header>
+    <div class="row content">
+        <nav class="d-none d-xl-block col-auto">
+            <p-panelMenu #menu [model]="menuItems"></p-panelMenu>
+        </nav>
+        
+        <main class="col-10 col-xl">
+            <div class="container-fluid">
+                <router-outlet></router-outlet>
+            </div>
+        </main>
+    </div>
+</div>
+<p-sidebar [style]="{'padding': '0 !important'}" [(visible)]="sidebarVisible" [fullScreen]="false" [dismissible]="true">
+    <ng-template pTemplate="header">
+        <img src="https://www.inovatec.com/wp-content/themes/inovatec/img/logo/logo.svg" style="padding: 1em; height: 3.75em;">
+    </ng-template>
+    <ng-template pTemplate="content">
+        <p-panelMenu #menu [model]="menuItems"></p-panelMenu>
+    </ng-template>
+</p-sidebar>

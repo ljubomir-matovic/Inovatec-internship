@@ -1,0 +1,50 @@
+@import "src/variables.scss";
+
+.content{
+    height: calc(100vh - 40px);
+
+    nav{
+        padding: 0 !important;
+        min-width: 16em;
+        border-right: solid 1px $shadowColor;
+    }
+
+    main{
+        flex-grow: 1;
+    }
+}
+
+:host ::ng-deep {
+    .p-sidebar-header {
+        padding-block: 0.5em;
+        border-bottom: solid 1px $shadowColor;
+    }
+
+    .p-sidebar-footer {
+        display: none;
+    }
+
+    .p-sidebar-content {
+        padding-inline: 0em;
+    }
+
+    .p-menuitem {
+        color: $primaryColor !important;
+    }
+
+    .p-menuitem-link-active {
+        background-color: $primaryColor;
+        
+        .p-menuitem-text {
+            color: white !important;
+            font-weight: 500;
+        }
+        .p-menuitem-icon {
+            color: white !important;
+        }
+
+        &:hover {
+            background: $primaryColor !important;
+        }
+    }
+}

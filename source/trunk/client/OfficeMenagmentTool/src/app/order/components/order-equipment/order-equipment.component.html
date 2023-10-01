@@ -1,0 +1,92 @@
+<p-toast position="bottom-right" [key]="toastKey"></p-toast>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col col-xl-7 m-auto">
+            <div class="card mt-5 border bg-white py-2 px-4 px-sm-5 d-flex flex-column align-items-center justify-content-center w-100">
+                <div class="row my-2 w-100">
+                    <div class="col py-4 w-100">
+                        <div class="panel-heading mb-4 w-100 d-flex flex-column align-items-center">
+                            <h2>{{ 'OrderAdministration.EquipmentOrderingTitle' | translate }}</h2>
+                        </div>
+                        <p class="description-text font-weight-light text-muted mt-4 mb-2 w-100">{{ 'OrderAdministration.SelectItemText' | translate }}<span class="required-star">&nbsp;*</span></p>
+                        <p-table
+                            #itemsTable
+                            class="card"
+                            dataKey="id"
+                            [paginator]="totalRecords > pageSize"
+                            [rows]="pageSize"
+                            [totalRecords]="totalRecords"
+                            [(first)]="first"
+                            [value]="items"
+                            (onLazyLoad)="lazyLoadItems($event)"
+                            [lazy]="true"
+                            [loading]="loadingItems"
+                            [globalFilterFields]="['name']"
+                            styleClass="p-datatable-sm"
+                            [showLoader]="false"
+                            [selectionMode]="submittingOrder ? 'none' : 'single'"
+                            [(selection)]="selectedItem">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th pSortableColumn="name">{{'ProductAdministration.NameLabel' | translate}}<p-sortIcon field="name" ></p-sortIcon></th>
+                                    <th>{{'ProductAdministration.CategoryLabel' | translate}}</th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <p-columnFilter type="text" field="name" (input)="filterItems($event, itemsTable, 'name')" [matchModeOptions]="[]" [matchMode]="matchMode"></p-columnFilter>
+                                    </th>
+                                    <th>
+                                        <p-columnFilter field="categories" [showMenu]="false">
+                                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                                <p-multiSelect [ngModel]="value" appendTo="body" [options]="categories" optionLabel="name" [selectedItemsLabel]="'{0} ' + ('ProductAdministration.SelectCategoryLabel' | translate) " [maxSelectedLabels]="1" (onChange)="filter($event.value)">
+                                                    <ng-template let-option pTemplate="item">
+                                                        <div class="inline-block vertical-align-middle">
+                                                            <span class="vertical-align-middle">{{ option.name }}</span>
+                                                        </div>
+                                                    </ng-template>
+                                                </p-multiSelect>
+                                            </ng-template>
+                                        </p-columnFilter>
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-item let-i="rowIndex">
+                                <tr [pSelectableRow]="item">
+                                    <td>{{ item.name }}</td>
+                                    <td>{{ item.category.name }}</td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="loadingbody">
+                                <tr>
+                                    <td><p-skeleton height="1.5em"></p-skeleton></td>
+                                    <td><p-skeleton height="1.5em"></p-skeleton></td>
+                                </tr>
+                                <tr>
+                                    <td><p-skeleton height="1.5em"></p-skeleton></td>
+                                    <td><p-skeleton height="1.5em"></p-skeleton></td>
+                                </tr>
+                                <tr>
+                                    <td><p-skeleton height="1.5em"></p-skeleton></td>
+                                    <td><p-skeleton height="1.5em"></p-skeleton></td>
+                                </tr>
+                                <tr>
+                                    <td><p-skeleton height="1.5em"></p-skeleton></td>
+                                    <td><p-skeleton height="1.5em"></p-skeleton></td>
+                                </tr>
+                                <tr>
+                                    <td><p-skeleton height="1.5em"></p-skeleton></td>
+                                    <td><p-skeleton height="1.5em"></p-skeleton></td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                        <p class="description-text font-weight-light text-muted mt-4 mb-2 w-100"> {{ 'OrderAdministration.EquipmentOrderingText' | translate }}<span class="required-star">&nbsp;*</span></p>
+                        <textarea [(ngModel)]="orderDescription" id="float-input" class="w-100" rows="5" cols="70" maxlength="500" pInputTextarea [autoResize]="true"></textarea>
+                        <div class="w-100 d-flex justify-content-end">
+                            <button pButton (click)="submitOrder()" class="align-self-end" [label]="'OrderAdministration.SubmitEquipmentOrderLabel' | translate" [disabled]="orderDescription.trim() == '' || selectedItem == null || submittingOrder" [loading]="submittingOrder"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

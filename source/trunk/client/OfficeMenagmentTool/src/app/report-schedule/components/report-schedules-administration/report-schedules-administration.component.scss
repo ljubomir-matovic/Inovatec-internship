@@ -1,0 +1,23 @@
+:host ::ng-deep {
+    .card button .p-column-filter-clear-button .p-link .ng-star-inserted{
+        display: none !important;
+    }
+
+    .p-chip {
+        width: 100%;
+        max-width: 3em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        padding: 0.15em 2em !important;
+    }
+
+    .yes-chip .p-chip {
+        background-color: var(--green-400) !important;
+    }
+    
+    .no-chip .p-chip {
+        background-color: var(--red-400) !important;
+    }
+}

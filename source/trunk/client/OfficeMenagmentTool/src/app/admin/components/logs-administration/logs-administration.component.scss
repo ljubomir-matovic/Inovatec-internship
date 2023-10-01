@@ -1,0 +1,27 @@
+.card{
+    margin: 30px 0;
+}
+
+:host ::ng-deep .card{
+    button.p-column-filter-clear-button.p-link.ng-star-inserted{
+        display: none !important;
+    }
+
+    th button.p-column-filter-menu-button.p-link {
+      display: none !important;
+    }
+}
+
+.overflow-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 25em;
+}
+
+.copy-log-button {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: 1.5em;
+}

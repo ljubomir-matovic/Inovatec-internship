@@ -1,0 +1,4 @@
+<div>
+  <p-selectButton class="d-none d-sm-flex" [options]="languages" (onChange)="changeLanguage($event)" [(ngModel)]="selectedLanguage" optionLabel="label" optionValue="value"></p-selectButton>
+  <p-dropdown class="d-block d-sm-none" [options]="languages" (onChange)="changeLanguage($event)" [(ngModel)]="selectedLanguage" optionLabel="label" optionValue="value"></p-dropdown>
+</div>

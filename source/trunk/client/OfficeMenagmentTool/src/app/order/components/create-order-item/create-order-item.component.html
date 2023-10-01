@@ -1,0 +1,35 @@
+<form [formGroup]="myForm" (submit)="submitForm()" class="create-equipment">
+  <div class="d-flex flex-column gap-1" *ngIf="orderItem == null">
+    <label htmlFor="category">{{ 'ProductAdministration.CategoryLabel' | translate }}<span class="required-star">&nbsp;*</span></label>
+    <p-dropdown [options]="categories" [filter]="true" filterBy="name" appendTo="body" [showClear]="true" [placeholder]="'Common.Any' | translate" (onChange)="setItems($event.value)" optionLabel="name" optionValue="id">
+      <ng-template let-option pTemplate="item">
+          <div class="inline-block vertical-align-middle">
+              <span class="ml-1 mt-1">{{ option.name }}</span>
+          </div>
+      </ng-template>
+    </p-dropdown>
+  </div>
+  <div class="d-flex flex-column gap-1" *ngIf="orderItem == null">
+    <label htmlFor="item">{{ 'ProductAdministration.ItemNameLabel' | translate }}<span class="required-star">&nbsp;*</span></label>
+    <p-dropdown formControlName="itemId" [options]="items" [filter]="true" filterBy="name" appendTo="body" [showClear]="true" [placeholder]="'Common.Any' | translate" optionLabel="name" optionValue="id">
+      <ng-template let-option pTemplate="item">
+          <div class="inline-block vertical-align-middle">
+              <span class="ml-1 mt-1">{{ option.name }}</span>
+          </div>
+      </ng-template>
+    </p-dropdown>
+    <div class="field" [class.error]="!item.valid && item.touched">
+      {{ 'Common.Required' | translate }}
+    </div>
+  </div>
+  <div class="d-flex flex-column gap-1">
+    <label htmlFor="amount">{{ 'ProductAdministration.AmountLabel' | translate }}<span class="required-star">&nbsp;*</span></label>
+    <p-inputNumber formControlName="amount" [min]="0"></p-inputNumber>
+    <div class="field" [class.error]="!amount.valid && amount.touched">
+      {{ 'Common.Required' | translate }}
+    </div>
+  </div>
+
+  <br>
+  <button pButton [label]="'Common.SubmitLabel' | translate" type="submit" [disabled]="!myForm.valid" [loading]="sending"></button>
+</form>

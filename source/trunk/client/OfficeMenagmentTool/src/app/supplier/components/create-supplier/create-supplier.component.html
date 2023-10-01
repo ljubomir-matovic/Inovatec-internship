@@ -1,0 +1,25 @@
+<form [formGroup]="supplierForm" (submit)="submitForm()" class="create-user" class="d-flex flex-column align-items-stretch gap-4">
+    <div class="w-100 d-flex flex-column gap-1">
+        <label htmlFor="name">{{ 'SupplierAdministration.NameLabel' | translate }}<span class="required-star">&nbsp;*</span></label>
+        <input pInputText id="name" formControlName="name"/>
+    </div>
+    <div class="w-100 d-flex flex-column gap-1">
+        <label htmlFor="phoneNumber">{{ 'SupplierAdministration.PhoneNumberLabel' | translate }}<span class="required-star">&nbsp;*</span></label>
+        <input pInputText id="phoneNumber" formControlName="phoneNumber"/>
+    </div>
+    <div class="w-100 d-flex flex-column gap-1">
+        <label htmlFor="country">{{ 'SupplierAdministration.CountryLabel' | translate }}<span class="required-star">&nbsp;*</span></label>
+        <input pInputText id="country" formControlName="country"/>
+    </div>
+    <div class="w-100 d-flex flex-column gap-1">
+        <label htmlFor="city">{{ 'SupplierAdministration.CityLabel' | translate }}<span class="required-star">&nbsp;*</span></label>
+        <input pInputText id="city" formControlName="city"/>
+    </div>
+    <div class="w-100 d-flex flex-column gap-1">
+        <label htmlFor="address">{{ 'SupplierAdministration.AddressLabel' | translate }}<span class="required-star">&nbsp;*</span></label>
+        <input pInputText id="address" formControlName="address"/>
+    </div>
+    <div class="w-100 d-flex flex-row justify-content-end">
+        <button pButton [label]="('Common.SubmitLabel' | translate)" type="submit" class="justify-self-end" [disabled]="!supplierForm.valid" [loading]="loading"></button>
+    </div>
+</form>

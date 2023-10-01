@@ -1,0 +1,13 @@
+:host ::ng-deep {
+  .dropdown > :first-child {
+    margin-bottom: 20px;
+  }
+
+  .p-datatable .p-datatable-tbody > tr > td:not(:first) {
+    padding: 0;
+  }
+
+  tr label{
+    cursor: pointer;
+  }
+}

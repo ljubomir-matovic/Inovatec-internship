@@ -1,0 +1,6 @@
+<div class="notification-container" (click)="executeAction()">
+  <div class="notification-wrapper" [class.read]="notification.isRead" [class.not-read]="!notification.isRead">
+    <p>{{ notification.description | translate }}</p>
+    <p>{{ notification.dateCreated | date: "dd.MM.yyyy. HH:mm" }}</p>
+  </div>
+</div>

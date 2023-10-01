@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Inovatec.OfficeManagementTool.Common\Inovatec.OfficeManagementTool.Common.csproj" />
+    <ProjectReference Include="..\Inovatec.OfficeManagementTool.InterfacesBL\Inovatec.OfficeManagementTool.InterfacesBL.csproj" />
+    <ProjectReference Include="..\Inovatec.OfficeManagementTool.InterfacesUI\Inovatec.OfficeManagementTool.InterfacesUI.csproj" />
+    <ProjectReference Include="..\Inovatec.OfficeManagementTool.Models\Inovatec.OfficeManagementTool.Models.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,11 @@
+<form [formGroup]="itemForm" (submit)="submitItem()" class="itemForm d-flex flex-column align-items-stretch gap-4">
+    <div class="d-flex flex-column gap-1">
+      <label htmlFor="name">{{'ProductAdministration.ItemNameLabel' | translate}}<span class="required-star">&nbsp;*</span></label>
+      <input pInputText id="name" formControlName="name"/>
+    </div>
+    <div class="d-flex flex-column gap-1">
+        <label htmlFor="type">{{'ProductAdministration.CategoryLabel' | translate}}<span class="required-star">&nbsp;*</span></label>
+        <p-dropdown appendTo="body" [style]="{'width': '100%'}" id="categoryId" formControlName="categoryId" [options]="itemCategories" optionLabel="name" optionValue="id"  ></p-dropdown>
+    </div>
+    <button pButton [style]="{'float': 'right'}" [label]="'Common.SubmitLabel' | translate" type="submit" class="justify-self-end" [disabled]="!itemForm.valid" [loading]="loading"></button>
+</form>

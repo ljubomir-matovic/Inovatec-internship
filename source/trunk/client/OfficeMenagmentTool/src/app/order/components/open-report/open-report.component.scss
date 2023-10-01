@@ -1,0 +1,60 @@
+@import "src/_variables";
+
+:host ::ng-deep {
+    .report-category-chip {
+        background-color: $secondaryColor;
+        color: white;
+        max-width: unset !important;
+        width: fit-content !important;
+        padding: 0.1em 1.5em !important;
+    }
+
+    .pending-chip .p-chip {
+        background-color: var(--bluegray-200);
+    }
+
+    .in-progress-chip .p-chip {
+        background-color: var(--yellow-400);
+    }
+    
+    .done-chip .p-chip {
+        background-color: var(--green-400);
+    }
+
+    .canceled-chip .p-chip {
+        background-color: var(--red-400);
+    }
+    
+    .p-chip {
+        width: 100%;
+        max-width: 10em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .p-chip-text {
+        color: white;
+        padding: 0 0.5em;
+    }
+
+    .p-dataview-emptymessage {
+        display: none;
+    }
+
+    .p-dataview.p-dataview-list .p-dataview-content > .p-grid > div {
+        border: none;
+    }
+}
+
+.description {
+    max-width: 46em;
+}
+
+.h-separator {
+    width: 3em;
+}
+
+.edit-section {
+    display: none;
+}

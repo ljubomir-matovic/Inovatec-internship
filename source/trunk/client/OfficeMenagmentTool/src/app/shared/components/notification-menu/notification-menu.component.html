@@ -1,0 +1,21 @@
+<p-toast position="bottom-right" [key]="toastKey"></p-toast>
+<div class="d-flex align-items-center" id="notification-menu" [style]="{ height: '42px', position: 'relative'}">
+  <i class="pi pi-bell text-3xl notification-icon" [class.hide-badge]="unreadNotificationNumber == 0" [style]="{ fontSize: '25px' }" [badgeDisabled]="unreadNotificationNumber < 1" pBadge [value]="unreadNotificationNumber + ''" (click)="showNotificationMenu()" ></i>
+  <p-dialog [(visible)]="menuVisible" [draggable]="false" [resizable]="false" [closable]="false" class="notification-menu">
+    <ng-template pTemplate="header">
+      <div class="d-flex flex-row align-items-center justify-content-between width-100">
+        <b>{{ 'Notification.Notifications' | translate }}</b>
+        <span class="mark-all" (click)="markAllAsRead()" [class.disabled]="unreadNotificationNumber == 0" >{{ 'Notification.MarkAllAsRead' | translate }}</span>
+      </div>
+    </ng-template>
+    <p-tabView>
+      <p-tabPanel [header]="'Notification.Unread' | translate" class="tab-panel">
+          <app-notification-group [showUnread]="true" (onNewNotification)="onNewNotification()" (onNotificationRead)="onNotificationRead()"></app-notification-group>
+      </p-tabPanel>
+      <p-tabPanel [header]="'Notification.Read' | translate" class="tab-panel">
+        <app-notification-group [showUnread]="false"></app-notification-group>
+      </p-tabPanel>
+    </p-tabView>
+    <ng-template pTemplate="footer"></ng-template>
+  </p-dialog>
+</div>

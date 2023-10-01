@@ -1,0 +1,17 @@
+.card{
+  margin: 30px 0;
+}
+
+:host ::ng-deep .card{
+  button.p-column-filter-clear-button.p-link.ng-star-inserted{
+    display: none !important;
+  }
+
+  th button.p-column-filter-menu-button.p-link {
+    display: none !important;
+  }
+}
+
+.button{
+  min-width: 90px;
+}

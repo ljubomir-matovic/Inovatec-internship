@@ -1,0 +1,21 @@
+<form [formGroup]="orderUpdateForm" (submit)="submitForm()" class="create-equipment">
+    <div class="d-flex flex-column gap-1">
+        <label htmlFor="offices">{{ 'OfficeAdministration.OfficeLabel' | translate }}</label>
+        <p-dropdown formControlName="officeId" [options]="offices" appendTo="body"optionLabel="name" optionValue="id">
+            <ng-template let-option pTemplate="item">
+                <div class="inline-block vertical-align-middle">
+                    <span class="ml-1 mt-1">{{ option.name }}</span>
+                </div>
+            </ng-template>
+        </p-dropdown>
+    </div>
+    <br>
+    <div class="d-flex flex-column gap-1">
+        <label htmlFor="amount">{{ 'ProductAdministration.AmountLabel' | translate }}<span class="required-star">&nbsp;*</span></label>
+        <p-inputNumber formControlName="amount" [min]="0"></p-inputNumber>
+    </div>
+    <br>
+    <div class="w-100 d-flex justify-content-end">
+        <button pButton [label]="'Common.SubmitLabel' | translate" type="submit" [disabled]="!orderUpdateForm" [loading]="sending"></button>
+    </div>
+</form>

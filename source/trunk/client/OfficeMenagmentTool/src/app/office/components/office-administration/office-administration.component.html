@@ -1,0 +1,120 @@
+<p-toast position="bottom-right" [key]="toastKey"></p-toast>
+<p-confirmDialog [style]="{ 'max-width': '25vw' }"></p-confirmDialog>
+<div class="card">
+    <p-table
+        #officesTable
+        [value]="offices"
+        [lazy]="true"
+        (onLazyLoad)="lazyLoadOffices($event)"
+        dataKey="id"
+        [paginator]="totalRecords > rows"
+        [rows]="rows"
+        [totalRecords]="totalRecords"
+        [loading]="loading"
+        [globalFilterFields]="['firstName']"
+        [(first)]="first"
+        styleClass="p-datatable-sm"
+        [showLoader]="false">
+        <ng-template pTemplate="caption">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <button pButton [label]="'Common.ClearLabel' | translate" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clearFilters(officesTable)" [title]="'Common.ClearTooltip' | translate"></button>
+                </div>
+                <div>
+                    <button pButton class="d-block d-sm-none" icon="pi pi-plus" [pTooltip]="'OfficeAdministration.AddOfficeLabel' | translate" (click)="showAddOffice()"></button>
+                    <button pButton class="d-none d-sm-block" icon="pi pi-plus" [label]="'OfficeAdministration.AddOfficeLabel' | translate" (click)="showAddOffice()"></button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="name">{{ 'Common.FirstNameLabel' | translate }}<p-sortIcon field="name" ></p-sortIcon> </th>
+                <th pSortableColumn="date">{{ 'Common.DateCreatedLabel' | translate }}<p-sortIcon field="date"></p-sortIcon> </th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <th>
+                    <p-columnFilter type="text" field="name" [matchModeOptions]="[]" [matchMode]="matchMode" (input)="applyFilter($event,officesTable, 'name')"></p-columnFilter>
+                </th>
+                <th> </th>
+                <th> </th>
+                <th> </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-office let-i="rowIndex">
+            <tr>
+                <td>{{ office.name }}</td>
+                <td>{{ office.dateCreated | date: 'dd.MM.yyyy HH:mm'}}</td>
+                <td>
+                    <button pButton class="p-button-sm p-button-outlined" type="button" icon="pi pi-pencil" [pTooltip]="'Common.EditLabel' | translate" tooltipPosition="bottom" (click)="showUpdateOffice(office)"></button>
+                </td>
+                <td>
+                    <button pButton class="p-button-sm p-button-outlined" type="button" icon="pi pi-trash" [pTooltip]="'Common.DeleteLabel' | translate" tooltipPosition="bottom" (click)="showDeleteConfirm(office.id)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="loadingbody">
+        <tr>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+            <td><p-skeleton height="36px"></p-skeleton></td>
+        </tr>
+    </ng-template>
+    </p-table>
+</div>

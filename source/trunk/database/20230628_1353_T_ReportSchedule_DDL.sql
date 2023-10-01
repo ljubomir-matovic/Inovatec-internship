@@ -1,0 +1,27 @@
+IF (
+	NOT EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='dbo' AND TABLE_NAME='ReportSchedule')
+	AND 
+	EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='dbo' AND TABLE_NAME='Office')
+)
+BEGIN
+	CREATE TABLE [dbo].[ReportSchedule](
+	[Id] [bigint] IDENTITY(1, 1) NOT NULL,
+	[OfficeId] [bigint] NOT NULL,
+	[ScheduleDate] [datetimeoffset] NOT NULL,
+	[DateCreated] [datetime] NOT NULL,
+	[DateModified] [datetime] NULL,
+	[IsActive] [bit] NOT NULL DEFAULT 1,
+	[IsDeleted] [bit] NOT NULL DEFAULT 0,
+	CONSTRAINT [FK_ReportSchedule_Office] FOREIGN KEY 
+	(
+		[OfficeId]
+	)
+	REFERENCES [Office]([Id]),
+	CONSTRAINT [PK_ReportsSchedule] PRIMARY KEY CLUSTERED
+	(
+		[Id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)	ON [PRIMARY]
+END
+
+

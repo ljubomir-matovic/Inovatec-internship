@@ -1,0 +1,9 @@
+:host ::ng-deep {
+  button.p-column-filter-clear-button.p-link.ng-star-inserted{
+    display: none !important;
+  }
+
+  th button.p-column-filter-menu-button.p-link {
+    display: none !important;
+  }
+}

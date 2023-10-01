@@ -1,0 +1,206 @@
+<p-toast position="bottom-right" [key]="toastKey"></p-toast>
+<p-confirmDialog [style]="{width: '25vw'}"></p-confirmDialog>
+<div class="card">
+    <p-table
+        #supplierTable
+        [value]="suppliers"
+        [lazy]="true"
+        (onLazyLoad)="loadSuppliers($event)"
+        dataKey="id"
+        [tableStyle]="{ 'min-width': '50rem', 'overflow':'auto' }"
+        [paginator]="totalRecords > rows"
+        [rows]="rows"
+        [totalRecords]="totalRecords"
+        [loading]="loading"
+        [(first)]="first"
+        styleClass="p-datatable-sm"
+        [showLoader]="false">
+        <ng-template pTemplate="emptymessage">
+            <tr>
+            <td colspan="5">
+                <div class="d-flex justify-content-center">
+                <p class="text-center mb-0">{{ 'Common.TableEmpty' | translate }}</p>
+                </div>
+            </td>
+            </tr>
+        </ng-template>
+    <ng-template pTemplate="caption">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <button pButton [label]="'Common.ClearLabel' | translate" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clearFilters(supplierTable)" [title]="'Common.ClearTooltip' | translate"></button>
+            </div>
+            <div class="d-flex flex-row gap-2">
+                <button pButton class="d-none d-sm-block" (click)="showAddSupplier()" icon="pi pi-plus" [label]="'SupplierAdministration.AddSupplierLabel' | translate"></button>
+                <button pButton class="d-block d-sm-none" (click)="showAddSupplier()" icon="pi pi-plus" [pTooltip]="'SupplierAdministration.AddSupplierLabel' | translate"></button>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="name">{{ 'SupplierAdministration.NameLabel' | translate }}<p-sortIcon field="name" ></p-sortIcon> </th>
+            <th pSortableColumn="phoneNumber">{{ 'SupplierAdministration.PhoneNumberLabel' | translate }}<p-sortIcon field="phoneNumber" ></p-sortIcon> </th>
+            <th pSortableColumn="country">{{ 'SupplierAdministration.CountryLabel' | translate }}<p-sortIcon field="country" ></p-sortIcon> </th>
+            <th pSortableColumn="city">{{ 'SupplierAdministration.CityLabel' | translate }}<p-sortIcon field="city" ></p-sortIcon> </th>
+            <th pSortableColumn="address">{{ 'SupplierAdministration.AddressLabel' | translate }}<p-sortIcon field="address" ></p-sortIcon> </th>
+            <th pSortableColumn="dateCreated">{{ 'Common.DateCreatedLabel' | translate }}<p-sortIcon field="dateCreated" ></p-sortIcon> </th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>
+                <p-columnFilter type="text" field="name" [matchModeOptions]="[]" [matchMode]="matchMode" (input)="applyFilter($event,supplierTable,'name')"></p-columnFilter>
+            </th>
+            <th>
+                <p-columnFilter type="text" field="phoneNumber" [matchModeOptions]="[]" [matchMode]="matchMode" (input)="applyFilter($event,supplierTable,'phoneNumber')"></p-columnFilter>
+            </th>
+            <th>
+                <p-columnFilter type="text" field="country" [matchModeOptions]="[]" [matchMode]="matchMode" (input)="applyFilter($event,supplierTable,'country')"></p-columnFilter>
+            </th>
+            <th>
+                <p-columnFilter type="text" field="city" [matchModeOptions]="[]" [matchMode]="matchMode" (input)="applyFilter($event,supplierTable,'city')"></p-columnFilter>
+            </th>
+            <th>
+                <p-columnFilter type="text" field="address" [matchModeOptions]="[]" [matchMode]="matchMode" (input)="applyFilter($event,supplierTable,'address')"></p-columnFilter>
+            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-supplier let-i="rowIndex">
+        <tr>
+            <td>{{ supplier.name }}</td>
+            <td>{{ supplier.phoneNumber }}</td>
+            <td>{{ supplier.country }}</td>
+            <td>{{ supplier.city }}</td>
+            <td>{{ supplier.address }}</td>
+            <td>{{ supplier.dateCreated | date: 'dd.MM.yyyy HH:mm'}}</td>
+            <td>
+                <button pButton icon="pi pi-pencil" class="p-button-outlined p-button-sm" (click)="showUpdateSupplier(supplier)"></button>
+            </td>
+            <td>
+                <button pButton icon="pi pi-trash" class="p-button-outlined p-button-sm" (click)="showDeleteConfirm(supplier.id)"></button>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="loadingbody">
+        <tr>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton width="30px" height="30px"></p-skeleton></td>
+            <td><p-skeleton width="30px" height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton width="30px" height="30px"></p-skeleton></td>
+            <td><p-skeleton width="30px" height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton width="30px" height="30px"></p-skeleton></td>
+            <td><p-skeleton width="30px" height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton width="30px" height="30px"></p-skeleton></td>
+            <td><p-skeleton width="30px" height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton width="30px" height="30px"></p-skeleton></td>
+            <td><p-skeleton width="30px" height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton width="30px" height="30px"></p-skeleton></td>
+            <td><p-skeleton width="30px" height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton width="30px" height="30px"></p-skeleton></td>
+            <td><p-skeleton width="30px" height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton width="30px" height="30px"></p-skeleton></td>
+            <td><p-skeleton width="30px" height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton width="30px" height="30px"></p-skeleton></td>
+            <td><p-skeleton width="30px" height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton width="30px" height="30px"></p-skeleton></td>
+            <td><p-skeleton width="30px" height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton width="30px" height="30px"></p-skeleton></td>
+            <td><p-skeleton width="30px" height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton width="30px" height="30px"></p-skeleton></td>
+            <td><p-skeleton width="30px" height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton width="30px" height="30px"></p-skeleton></td>
+            <td><p-skeleton width="30px" height="30px"></p-skeleton></td>
+        </tr>
+    </ng-template>
+    </p-table>
+</div>

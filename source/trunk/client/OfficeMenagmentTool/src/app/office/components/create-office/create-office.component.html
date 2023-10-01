@@ -1,0 +1,9 @@
+<form [formGroup]="officeForm" (submit)="submitOffice()" class="d-flex flex-column align-items-stretch gap-4">
+    <div class="d-flex flex-column gap-1">
+        <label htmlFor="name">{{'OfficeAdministration.OfficeNameLabel' | translate}}<span class="required-star">&nbsp;*</span></label>
+        <input pInputText id="name" formControlName="name"/>
+    </div>
+    <div class="w-100 d-fled justify-content-end">
+        <button pButton [style]="{'float': 'right'}" [label]="'Common.SubmitLabel' | translate" type="submit" class="justify-self-end" [disabled]="!officeForm.valid" [loading]="loading"></button>
+    </div>
+</form>

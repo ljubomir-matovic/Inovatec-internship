@@ -1,0 +1,23 @@
+﻿# Angular
+node_modules/
+dist/
+.angular/
+*.js
+*.js.map
+*.d.ts
+
+# C#
+obj/
+bin/
+*.dll
+*.exe
+*.pdb
+*.obj
+*.user
+*.suo
+*.cache
+*.log
+*.vs/
+*.vscode/
+*.config
+efpt.config.json

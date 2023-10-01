@@ -1,0 +1,154 @@
+<p-toast position="bottom-right" [key]="toastKey"></p-toast>
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+<div class="card">
+    <p-table
+        #userTable
+        [value]="logs"
+        [lazy]="true"
+        (onLazyLoad)="lazyLoadLogs($event)"
+        dataKey="id"
+        [tableStyle]="{ 'min-width': '75rem', 'overflow':'auto' }"
+        [paginator]="totalRecords > rows"
+        [rows]="rows"
+        [totalRecords]="totalRecords"
+        [loading]="loading"
+        [globalFilterFields]="['firstName']"
+        [(first)]="first"
+        styleClass="p-datatable-sm"
+        [showLoader]="false"
+        selectionMode="single"
+        [(selection)]="selectedLog"
+        [metaKeySelection]="true">
+        <ng-template pTemplate="caption">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <button pButton [label]="'Common.ClearLabel' | translate" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clearFilters(userTable)" [title]="'Common.ClearTooltip' | translate"></button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="message">{{ 'LogsAdministration.MessageLabel' | translate }}<p-sortIcon field="message" ></p-sortIcon> </th>
+                <th pSortableColumn="exception">{{ 'LogsAdministration.ExceptionLabel' | translate }}<p-sortIcon field="exception"></p-sortIcon> </th>
+                <th pSortableColumn="user">{{ 'LogsAdministration.UserLabel' | translate }}<p-sortIcon field="user"></p-sortIcon> </th>
+                <th pSortableColumn="date">{{ 'LogsAdministration.TimeStampLabel' | translate }}<p-sortIcon field="date"></p-sortIcon> </th>
+            </tr>
+            <tr>
+                <th>
+                    <p-columnFilter type="text" field="message" [matchModeOptions]="[]" [matchMode]="matchMode" (input)="applyFilter($event,userTable,'message')"></p-columnFilter>
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="exception" [matchModeOptions]="[]" [matchMode]="matchMode" (input)="applyFilter($event,userTable,'exception')"></p-columnFilter>
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="user" [matchModeOptions]="[]" [matchMode]="matchMode"  (input)="applyFilter($event,userTable,'user')"></p-columnFilter>
+                </th>
+                <th> </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-log let-i="rowIndex">
+            <tr [pSelectableRow]="log">
+                <td><p class="overflow-text">{{ log.message }}</p></td>
+                <td><p class="overflow-text my-0">{{ log.exception }}</p></td>
+                <td><p class="overflow-text">{{ log.user }}</p></td>
+                <td>{{ log.timeStamp | date: 'dd.MM.yyyy hh:mm' }}</td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="loadingbody">
+            <tr>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+            </tr>
+            <tr>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+            </tr>
+            <tr>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+            </tr>
+            <tr>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+            </tr>
+            <tr>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+            </tr>
+            <tr>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+            </tr>
+            <tr>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+            </tr>
+            <tr>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+            </tr>
+            <tr>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+            </tr>
+            <tr>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+            </tr>
+            <tr>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+            </tr>
+            <tr>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+            </tr>
+            <tr>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+                <td><p-skeleton height="30px"></p-skeleton></td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<div class="card" *ngIf="selectedLog != null">
+    <p-panel>
+        <ng-template pTemplate="header">
+            <div class="w-100 d-flex align-items-center justify-content-between gap-5">
+                <span class="flex-grow"> {{ selectedLog.message }} </span>
+                <div class="d-flex align-items-center justify-content-center gap-3">
+                    <span class="no-text-break"> {{ selectedLog.user }} </span>
+                    <span class="no-text-break"> {{ selectedLog.timeStamp | date: 'dd.MM.yyyy hh:mm' }} </span>
+                </div>
+            </div>
+        </ng-template>
+        {{ selectedLog.exception }}
+        <button pButton class="copy-log-button" icon="pi pi-copy" (click)="copyLog(selectedLog)" [pTooltip]="'Common.CopyLabel' | translate" tooltipPosition="bottom" styleClass="p-button-rounded p-button-primary"></button>
+    </p-panel>
+</div>

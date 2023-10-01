@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.18">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+	  <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
+	  <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="6.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Inovatec.OfficeManagementTool.Common\Inovatec.OfficeManagementTool.Common.csproj" />
+    <ProjectReference Include="..\Inovatec.OfficeManagementTool.Hubs\Inovatec.OfficeManagementTool.Hubs.csproj" />
+    <ProjectReference Include="..\Inovatec.OfficeManagementTool.InterfacesUI\Inovatec.OfficeManagementTool.InterfacesUI.csproj" />
+    <ProjectReference Include="..\Inovatec.OfficeManagementTool.Models\Inovatec.OfficeManagementTool.Models.csproj" />
+    <ProjectReference Include="..\Inovatec.OfficeManagementTool.ServiceInitializer\Inovatec.OfficeManagementTool.ServiceInitializer.csproj" />
+    <ProjectReference Include="..\Inovatec.OfficeManagementTool.Translate\Inovatec.OfficeManagementTool.Localization.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\assets\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\assets\inovatecLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

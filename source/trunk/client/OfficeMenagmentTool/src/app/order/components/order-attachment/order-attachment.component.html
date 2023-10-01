@@ -1,0 +1,11 @@
+<div class="card d-flex flex-row gap-3 attachment align-items-center">
+  <div class="d-flex align-items-center justify-content-center" (click)="showTooltip()">
+    <span [pTooltip]="attachment.name" [style]="{ width: '200px'}" class="text-elipsis">{{ attachment.name }}</span>
+  </div>
+  <div class="d-flex justify-content-center align-items-center delete-icon-container card pointer">
+    <span class="pi pi-download " (click)="showAttachment()" pTooltip="download"></span>
+  </div>
+  <div class="d-flex justify-content-center align-items-center delete-icon-container card pointer">
+    <span class="pi pi-times delete-icon " (click)="deleteAttachment($event)" pTooltip="delete"></span>
+  </div>
+</div>

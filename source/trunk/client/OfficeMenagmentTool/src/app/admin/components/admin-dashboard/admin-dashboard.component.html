@@ -1,0 +1,221 @@
+<p-toast position="bottom-right" [key]="toastKey"></p-toast>
+<p-confirmDialog [style]="{width: '30vw'}"></p-confirmDialog>
+<div class="card">
+    <p-table
+        #userTable
+        [value]="users"
+        [lazy]="true"
+        (onLazyLoad)="loadUsers($event)"
+        dataKey="id"
+        [paginator]="totalRecords>rows"
+        [rows]="rows"
+        [totalRecords]="totalRecords"
+        [loading]="loading"
+        [globalFilterFields]="['firstName']"
+        [(first)]="first"
+        styleClass="p-datatable-sm"
+        [showLoader]="false">
+        <ng-template pTemplate="emptymessage">
+            <tr>
+            <td colspan="5">
+                <div class="d-flex justify-content-center">
+                <p class="text-center mb-0">{{ 'Common.TableEmpty' | translate }}</p>
+                </div>
+            </td>
+            </tr>
+        </ng-template>
+    <ng-template pTemplate="caption">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <button pButton [label]="'Common.ClearLabel' | translate" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clearFilters(userTable)" [title]="'Common.ClearTooltip' | translate"></button>
+            </div>
+            <div class="d-flex flex-row gap-2">
+                <button pButton class="d-none d-md-block" (click)="showAddCSV()" icon="pi pi-file-excel" [label]="'UserAdministration.AddUsersFromCSVLabel' | translate"></button>
+                <button pButton class="d-none d-md-block" (click)="showAddUser()" icon="pi pi-plus" [label]="'UserAdministration.AddUserLabel' | translate"></button>
+
+                <button pButton class="d-block d-md-none" (click)="showAddCSV()" icon="pi pi-file-excel" [pTooltip]="'UserAdministration.AddUsersFromCSVLabel' | translate"></button>
+                <button pButton class="d-block d-md-none" (click)="showAddUser()" icon="pi pi-plus" [pTooltip]="'UserAdministration.AddUserLabel' | translate"></button>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="firstName">{{ 'Common.FirstNameLabel' | translate }}<p-sortIcon field="firstName" ></p-sortIcon> </th>
+            <th pSortableColumn="lastName">{{ 'Common.LastNameLabel' | translate }}<p-sortIcon field="lastName"></p-sortIcon> </th>
+            <th pSortableColumn="office">{{ 'UserAdministration.OfficeLabel' | translate }}<p-sortIcon field="office"></p-sortIcon> </th>
+            <th pSortableColumn="email"> Email <p-sortIcon field="email"></p-sortIcon> </th>
+            <th>{{ 'Common.RoleLabel' | translate }}</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>
+                <p-columnFilter type="text" field="firstName" [matchModeOptions]="[]" [matchMode]="matchMode" (input)="applyFilter($event,userTable,'firstName')"></p-columnFilter>
+            </th>
+            <th>
+                <p-columnFilter type="text" field="lastName" [matchModeOptions]="[]" [matchMode]="matchMode" (input)="applyFilter($event,userTable,'lastName')"></p-columnFilter>
+            </th>
+            <th>
+                <p-columnFilter type="text" field="office" [matchModeOptions]="[]" [matchMode]="matchMode"  (input)="applyFilter($event,userTable,'office')"></p-columnFilter>
+            </th>
+            <th>
+                <p-columnFilter type="text" field="email" [matchModeOptions]="[]" [matchMode]="matchMode"  (input)="applyFilter($event,userTable,'email')"></p-columnFilter>
+            </th>
+            <th>
+            <p-columnFilter field="roles" matchMode="in" [showMenu]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-multiSelect [ngModel]="value" appendTo="body" [options]="roles" (onChange)="filter($event.value)" optionLabel="name" [selectedItemsLabel]="'{0} '+('Common.SelectItemsLabel' | translate) " [maxSelectedLabels]="1">
+                        <ng-template let-option pTemplate="item">
+                            <div class="inline-block vertical-align-middle">
+                                <span class="vertical-align-middle">{{ "Common."+option.name | translate }}</span>
+                            </div>
+                        </ng-template>
+                    </p-multiSelect>
+                </ng-template>
+            </p-columnFilter>
+            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user let-i="rowIndex">
+        <tr [pContextMenuRow]="user">
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.office != null ? user.office.name : ('Common.NoOfficeLabel' | translate) }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ "Common." + roles[user.role].name | translate }}</td>
+            <td>
+                <button pButton type="button" icon="bi bi-key-fill" class="p-button-outlined p-button-sm" [pTooltip]="'Reset'" (click)="showCreateResetPasswordTokenConfirm(user.email)"></button>
+            </td>
+            <td>
+                <button pButton type="button" icon="pi pi-user-edit" class="p-button-outlined p-button-sm" [pTooltip]="'Common.EditLabel' | translate" tooltipPosition="bottom" (click)="showUpdateUser(user)"></button>
+            </td>
+            <td>
+                <button pButton type="button" icon="pi pi-trash" class="p-button-outlined p-button-sm" [pTooltip]="'Common.DeleteLabel' | translate" tooltipPosition="bottom" (click)="showDeleteConfirm(user.id)"></button>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="loadingbody">
+        <tr>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+        </tr>
+        <tr>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+            <td><p-skeleton height="30px"></p-skeleton></td>
+        </tr>
+    </ng-template>
+    </p-table>
+</div>

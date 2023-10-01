@@ -1,0 +1,47 @@
+<form [formGroup]="myForm" (submit)="submitForm()" class="create-user">
+  <div class="d-flex flex-column gap-1">
+    <label htmlFor="firstName">{{ 'Common.FirstNameLabel' | translate }}<span class="required-star">&nbsp;*</span></label>
+    <input pInputText id="firstName" formControlName="firstName"/>
+    <div class="field" [class.error]="!firstName.valid && firstName.touched">
+      {{ 'Common.FirstNameRequired' | translate }}
+    </div>
+  </div>
+  <div class="d-flex flex-column gap-1">
+    <label htmlFor="lastName">{{ 'Common.LastNameLabel' | translate }}<span class="required-star">&nbsp;*</span></label>
+    <input pInputText id="lastName" formControlName="lastName"/>
+    <div class="field" [class.error]="!lastName.valid && lastName.touched">
+      {{ 'Common.LastNameRequired' | translate }}
+    </div>
+  </div>
+  <div class="d-flex flex-column gap-1">
+    <label htmlFor="email">Email<span class="required-star">&nbsp;*</span></label>
+    <input pInputText id="email" formControlName="email"/>
+    <div class="field" [class.error]="!email.valid && email.touched">
+      <span *ngIf="email.errors != null">
+        <span *ngIf="email.errors['email']">{{ 'Common.EmailInvalid' | translate }}</span>
+        <span *ngIf="email.errors['required']">{{ 'Common.EmailRequired' | translate }}</span>
+      </span>
+    </div>
+  </div>
+  <div class="d-flex flex-column gap-4">
+    <div class="d-flex flex-column gap-1">
+      <label htmlFor="role">{{ 'Common.RoleLabel' | translate }}<span class="required-star">&nbsp;*</span></label>
+      <p-dropdown [options]="roles" id="role" formControlName="role" optionValue="id" appendTo="body">
+        <ng-template pTemplate="item" let-item>
+          {{ "Common." + item.name | translate }}
+        </ng-template>
+        <ng-template let-selectedItem pTemplate="selectedItem">
+          {{ "Common." + selectedItem.name | translate }}
+        </ng-template>
+      </p-dropdown>
+    </div>
+    <div class="d-flex flex-column gap-1">
+      <label htmlFor="officeId">{{ 'UserAdministration.OfficeLabel' | translate }}<span class="required-star">&nbsp;*</span></label>
+      <p-dropdown #officesDropdown [options]="offices" id="officeId" formControlName="officeId" optionLabel="name" optionValue="id" appendTo="body"> </p-dropdown>
+    </div>
+  </div>
+  <br>
+  <div class="w-100 d-flex justify-content-end">
+    <button pButton [label]="'Common.SubmitLabel' | translate" type="submit" [disabled]="!myForm.valid" [loading]="sending"></button>
+  </div>
+</form>

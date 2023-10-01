@@ -1,0 +1,58 @@
+@import "src/_variables";
+
+.snackItem {
+    h3 {
+        font-size: 1.25rem;
+        font-weight: 400;
+    }
+
+    label {
+        color: $primaryColor;
+        white-space: nowrap;
+    }
+}
+
+.copy-log-button {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+:host ::ng-deep {
+
+    .p-dataview-header {
+        padding: 0.75em;
+    }
+
+    .p-button {
+        white-space: nowrap;
+    }
+
+    .p-inputnumber * {
+        width: 5em;
+    }
+
+    .p-category-chip{ 
+        .p-chip {
+            color: white;
+            font-size: 0.85rem;
+            border-radius: 10rem;
+            padding-inline: 0.75rem;
+            background-color: $secondaryColor !important;
+        }
+
+        .p-chip-icon {
+            font-size: 0.75rem;
+        }
+    }
+
+    .p-tabview-panels {
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .p-tabview-panel {
+        height: 45em !important;
+    }
+}

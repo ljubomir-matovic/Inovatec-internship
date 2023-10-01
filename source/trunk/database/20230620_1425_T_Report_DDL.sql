@@ -1,0 +1,32 @@
+IF (NOT EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='dbo' AND TABLE_NAME='Report')
+	AND 
+	EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='dbo' AND TABLE_NAME='User')
+	AND 
+	EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='dbo' AND TABLE_NAME='Equipment'))
+BEGIN
+	CREATE TABLE [dbo].[Report](
+		[Id] [bigint] IDENTITY(1, 1) NOT NULL,
+		[UserId] [bigint] NOT NULL,
+		[EquipmentId] [bigint] NULL,
+		[Description] [varchar] (500) NULL,
+		[State] [tinyint] DEFAULT 0,
+		[Category] [tinyint] DEFAULT 0,
+		[DateCreated] [datetime] NULL,
+		[DateModified] [datetime] NULL,
+		[IsDeleted] [bit] DEFAULT 0,
+	CONSTRAINT [FK_Report_User] FOREIGN KEY 
+	(
+		[UserId]
+	)
+	REFERENCES [User]([Id]),
+	CONSTRAINT [FK_Report_Equipment] FOREIGN KEY 
+	(
+		[EquipmentId]
+	)
+	REFERENCES [Equipment]([Id]),
+	CONSTRAINT [PK_Report] PRIMARY KEY CLUSTERED
+	(
+		[Id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)	ON [PRIMARY]
+END

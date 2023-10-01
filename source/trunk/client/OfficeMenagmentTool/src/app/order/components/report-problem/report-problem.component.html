@@ -1,0 +1,123 @@
+<div class="container-fluid mb-5">
+    <div class="row">
+        <div class="col col-xl-7 m-auto">
+            <div class="card mt-5 border bg-white py-2 px-4 px-sm-5 d-flex flex-column align-items-center justify-content-center w-100">
+                <div class="panel-heading mt-5 mb-4 w-100 d-flex flex-column align-items-center">
+                    <h2>{{ 'OrderAdministration.ProblemReportingTitle' | translate }}</h2>
+                </div>
+                <div class="panel-body d-flex flex-column align-items-center mt-2 mb-5 gap-4 w-100">
+                    <div class="w-100">
+                        <div class="w-100 mb-3">
+                            <p class="my-1">{{'ReportAdministration.ReportCategory' | translate}}<span class="required-star">:&nbsp;*</span></p>
+                            <p-dropdown class="w-100" [options]="reportCategories" appendTo="body" [(ngModel)]="selectedReportCategory">
+                                <ng-template let-category pTemplate="selectedItem">
+                                    <span>{{'ReportAdministration.' + category.name | translate}}</span>
+                                </ng-template>
+                                <ng-template let-category pTemplate="item">
+                                    <span>{{'ReportAdministration.' + category.name | translate}}</span>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+                        <div class="w-100 mb-3">
+                            <p class="my-1">{{'OfficeAdministration.OfficeLabel' | translate}}:<span class="required-star">&nbsp;*</span></p>
+                            <p-dropdown class="w-100" [options]="offices" appendTo="body" [(ngModel)]="selectedOffice">
+                                <ng-template let-office pTemplate="selectedItem">
+                                    <span>{{ office.name }}</span>
+                                </ng-template>
+                                <ng-template let-office pTemplate="item">
+                                    <span>{{ office.name }}</span>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+                        <p-table
+                            #equipmentTable
+                            class="card"
+                            dataKey="id"
+                            [paginator]="totalRecords > pageSize"
+                            [totalRecords]="totalRecords"
+                            [(first)]="first"
+                            [rows]="pageSize"
+                            [value]="equipmentList"
+                            (onLazyLoad)="lazyLoadEquipment($event)"
+                            [lazy]="true"
+                            [loading]="loadingEquipment"
+                            [globalFilterFields]="['name']"
+                            styleClass="p-datatable-sm"
+                            [showLoader]="false"
+                            [selectionMode]="submittingOrder ? 'none' : 'single'"
+                            [(selection)]="selectedEquipment"
+                            [hidden]="selectedReportCategory.id !== reportCategory.Equipment">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th pSortableColumn="itemName">{{ 'ProductAdministration.ItemNameLabel' | translate }}<p-sortIcon field="itemName" ></p-sortIcon> </th>
+                                    <th pSortableColumn="categoryName">{{ 'ProductAdministration.CategoryLabel' | translate }}<p-sortIcon field="categoryName"></p-sortIcon> </th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <p-columnFilter field="itemId" matchMode="in" [showMenu]="false">
+                                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                                <p-dropdown [ngModel]="value" [options]="items" [filter]="true" filterBy="name" appendTo="body" [showClear]="true" [placeholder]="'Common.Any' | translate" (onChange)="filter($event.value); selectedEquipment = null;" optionLabel="name" optionValue="id">
+                                                    <ng-template let-option pTemplate="item">
+                                                        <div class="inline-block vertical-align-middle">
+                                                            <span class="ml-1 mt-1">{{ option.name }}</span>
+                                                        </div>
+                                                    </ng-template>
+                                                </p-dropdown>
+                                            </ng-template>
+                                        </p-columnFilter>
+                                    </th>
+                                    <th>
+                                        <p-columnFilter field="categoryId" matchMode="in" [showMenu]="false">
+                                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                                <p-dropdown [ngModel]="value" [options]="categories" [filter]="true" filterBy="name" appendTo="body" [showClear]="true" [placeholder]="'Common.Any' | translate" (ngModelChange)="setItems($event)" (onChange)="filter($event.value);" optionLabel="name" optionValue="id">
+                                                    <ng-template let-option pTemplate="item">
+                                                        <div class="inline-block vertical-align-middle">
+                                                            <span class="ml-1 mt-1">{{ option.name }}</span>
+                                                        </div>
+                                                    </ng-template>
+                                                </p-dropdown>
+                                            </ng-template>
+                                        </p-columnFilter>
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-equipment let-i="rowIndex">
+                                <tr [pSelectableRow]="equipment">
+                                    <td>{{ equipment.itemName }}</td>
+                                    <td>{{ equipment.categoryName }}</td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="loadingbody">
+                                <tr>
+                                    <td><p-skeleton height="1.5em"></p-skeleton></td>
+                                    <td><p-skeleton height="1.5em"></p-skeleton></td>
+                                </tr>
+                                <tr>
+                                    <td><p-skeleton height="1.5em"></p-skeleton></td>
+                                    <td><p-skeleton height="1.5em"></p-skeleton></td>
+                                </tr>
+                                <tr>
+                                    <td><p-skeleton height="1.5em"></p-skeleton></td>
+                                    <td><p-skeleton height="1.5em"></p-skeleton></td>
+                                </tr>
+                                <tr>
+                                    <td><p-skeleton height="1.5em"></p-skeleton></td>
+                                    <td><p-skeleton height="1.5em"></p-skeleton></td>
+                                </tr>
+                                <tr>
+                                    <td><p-skeleton height="1.5em"></p-skeleton></td>
+                                    <td><p-skeleton height="1.5em"></p-skeleton></td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                    <div class="w-100">
+                        <p class="description-text font-weight-light text-muted my-1 w-100">{{ 'OrderAdministration.ProblemReportingText' | translate }}<span class="required-star">&nbsp;*</span></p>
+                        <textarea class="w-100" rows="5" cols="70" maxlength="500" [(ngModel)]="descriptionText" pInputTextarea [autoResize]="true">  </textarea>
+                    </div>
+                    <button pButton class="align-self-end" [label]="'OrderAdministration.SubmitLabel' | translate" (click)="submitReport()" [disabled]="!submitReportIsValid" [loading]="sending"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+<p-toast position="bottom-right" [key]="toastKey"></p-toast>
+<form [formGroup]="reportScheduleForm" (submit)="submitForm()" class="create-user" class="categoryForm d-flex flex-column align-items-stretch gap-4">
+    <div class="w-100 d-flex flex-column gap-1">
+        <label htmlFor="officeId">{{ 'UserAdministration.OfficeLabel' | translate }}<span class="required-star">&nbsp;*</span></label>
+        <p-dropdown [style]="{'width': '100%'}" #officesDropdown [options]="offices" id="officeId" formControlName="officeId" optionLabel="name" optionValue="id" appendTo="body"> </p-dropdown>
+    </div>
+    <div class="w-100 d-flex flex-column gap-1">
+        <label htmlFor="scheduleDate">{{'ScheduleAdministration.NotificationDateLabel' | translate}}<span class="required-star">&nbsp;*</span></label>
+        <p-calendar #calendar [minDate]="minDate" dateFormat="dd.mm.yy" [style]="{'width': '100%'}" formControlName="scheduleDate" appendTo="body" [showTime]="false" [showIcon]="true"></p-calendar>
+    </div>
+    <div class="w-100 d-flex flex-column gap-1" *ngIf="dialogConfig.data?.reportSchedule">
+        <label for="isActiveToggle">{{'ScheduleAdministration.ActiveLabel' | translate}}:</label>
+        <p-toggleButton id="isActiveToggle" formControlName="isActive" [onLabel]="'Common.Yes' | translate" [offLabel]="'Common.No' | translate"></p-toggleButton>
+    </div>
+    <div class="w-100 d-flex flex-row justify-content-end">
+        <button pButton [label]="dialogConfig.data?.reportSchedule ? ('Common.SubmitLabel' | translate) : ('Common.SaveLabel' | translate)" type="submit" class="justify-self-end" [disabled]="!reportScheduleForm.valid || invalidDate" [loading]="loading"></button>
+    </div>
+</form>

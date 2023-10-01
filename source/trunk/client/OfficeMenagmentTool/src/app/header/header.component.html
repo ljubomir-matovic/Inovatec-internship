@@ -1,0 +1,11 @@
+<header class="row ps-3">
+  <p-button class="d-block d-xl-none left-side" icon="pi pi-bars" (click)="sidebarVisibleChange.emit(true)"></p-button>
+  <img class="d-none d-xl-block" src="https://www.inovatec.com/wp-content/themes/inovatec/img/logo/logo.svg">
+  <div class="right-side">
+    <app-change-language></app-change-language>
+    <app-notification-menu></app-notification-menu>
+    <p-button class="d-none d-md-block loginButton"[label]="fullName" (click)="menu.toggle($event)" icon="pi pi-user"></p-button>
+    <p-button class="d-block d-md-none d-flex loginButton" (click)="menu.toggle($event)" icon="pi pi-user"></p-button>
+  </div>
+</header>
+<p-menu #menu [model]="menuItems" [popup]="true"></p-menu>

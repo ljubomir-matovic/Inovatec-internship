@@ -1,0 +1,18 @@
+@import "/src/variables";
+
+.field:not(.error){
+  visibility: hidden;
+}
+
+.error{
+  color: $errorMessageColor;
+}
+
+form.create-user{
+  display: flex;
+  flex-direction: column;
+  gap:10px;
+  padding: 20px 0 0 0;
+  min-width: 30vw;
+  max-width: 40vw;
+}

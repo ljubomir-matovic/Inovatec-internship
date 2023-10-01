@@ -1,0 +1,33 @@
+.card{
+  margin: 30px 0;
+}
+
+:host ::ng-deep{
+  .card button.p-column-filter-clear-button.p-link.ng-star-inserted{
+    display: none !important;
+  }
+
+  th button.p-column-filter-menu-button.p-link {
+    display: none !important;
+  }
+
+  .p-datatable .p-datatable-tbody > tr > td:not(:first-child,:last-child) {
+    padding: 0;
+  }
+
+  tr {
+    cursor: pointer;
+  }
+
+  tr label{
+    cursor: pointer;
+  }
+
+  .width-100{
+    width: 100%;
+  }
+}
+
+.title-section {
+  height: 80px;
+}

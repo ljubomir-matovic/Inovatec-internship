@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddAttachment" xml:space="preserve">
+    <value>Add attachment</value>
+  </data>
+  <data name="AmountLabel" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="Attachments" xml:space="preserve">
+    <value>Attachments</value>
+  </data>
+  <data name="Buy1Label" xml:space="preserve">
+    <value>Buy 1</value>
+  </data>
+  <data name="Canceled" xml:space="preserve">
+    <value>Canceled</value>
+  </data>
+  <data name="CreateOrder" xml:space="preserve">
+    <value>Create order</value>
+  </data>
+  <data name="CreateOrderConfirm" xml:space="preserve">
+    <value>Do you want to create order?</value>
+  </data>
+  <data name="DateCreatedLabel" xml:space="preserve">
+    <value>Report date</value>
+  </data>
+  <data name="DateOrderedLabel" xml:space="preserve">
+    <value>Order date</value>
+  </data>
+  <data name="DeleteAttachmentDescription" xml:space="preserve">
+    <value>Do you want to delete the attachment?</value>
+  </data>
+  <data name="DeleteAttachmentTitle" xml:space="preserve">
+    <value>Delete attachment</value>
+  </data>
+  <data name="DeleteEquipmentOrderConfirmationDescription" xml:space="preserve">
+    <value>Are you sure you want to delete this order?</value>
+  </data>
+  <data name="DeleteOrderConfirmationDescription" xml:space="preserve">
+    <value>Do you want to delete this order?</value>
+  </data>
+  <data name="DeleteReportConfirmationDescription" xml:space="preserve">
+    <value>Do you want to delete this report?</value>
+  </data>
+  <data name="DescriptionLabel" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="EmptyCart" xml:space="preserve">
+    <value>Cart is empty. You must have at least one item in the cart. </value>
+  </data>
+  <data name="EquipmentOrderingText" xml:space="preserve">
+    <value>Reason why you are ordering this equipment:</value>
+  </data>
+  <data name="EquipmentOrderingTitle" xml:space="preserve">
+    <value>Order equipment</value>
+  </data>
+  <data name="GlobalCartLabel" xml:space="preserve">
+    <value>Global Cart</value>
+  </data>
+  <data name="Here" xml:space="preserve">
+    <value>here</value>
+  </data>
+  <data name="In Progress" xml:space="preserve">
+    <value>In progress</value>
+  </data>
+  <data name="Items" xml:space="preserve">
+    <value>Items</value>
+  </data>
+  <data name="MustBePendingOrInProgress" xml:space="preserve">
+    <value>You can edit order if state is "pending" or "in progress".</value>
+  </data>
+  <data name="MyCartLabel" xml:space="preserve">
+    <value>My Cart</value>
+  </data>
+  <data name="NoAttachment" xml:space="preserve">
+    <value>Attachments does't exists currently.</value>
+  </data>
+  <data name="OfficeCartLabel" xml:space="preserve">
+    <value>Office Cart</value>
+  </data>
+  <data name="Order" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="OrderingLabel" xml:space="preserve">
+    <value>Ordering</value>
+  </data>
+  <data name="OrderAccepted" xml:space="preserve">
+    <value>Order is created successfully. You can find your order</value>
+  </data>
+  <data name="OrderFailed" xml:space="preserve">
+    <value>Sorry. An error has occurred. Try to order again.</value>
+  </data>
+  <data name="OrderItemAlreadyExists" xml:space="preserve">
+    <value>Order item already exists in the order.</value>
+  </data>
+  <data name="OrderItemCreatedSuccess" xml:space="preserve">
+    <value>Order item created successfully.</value>
+  </data>
+  <data name="ORLabel" xml:space="preserve">
+    <value>OR</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>Pending</value>
+  </data>
+  <data name="ProblemReportingText" xml:space="preserve">
+    <value>Describe problem that you have encoutered:</value>
+  </data>
+  <data name="ProblemReportingTitle" xml:space="preserve">
+    <value>Report problem</value>
+  </data>
+  <data name="ReportDeleteSuccess" xml:space="preserve">
+    <value>Order deleted successfuly!</value>
+  </data>
+  <data name="SelectItemText" xml:space="preserve">
+    <value>Choose an item you want to order:</value>
+  </data>
+  <data name="SelectStateLabel" xml:space="preserve">
+    <value>states</value>
+  </data>
+  <data name="SnackLabel" xml:space="preserve">
+    <value>Snack</value>
+  </data>
+  <data name="StateLabel" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="SubmitEquipmentOrderLabel" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="SubmitLabel" xml:space="preserve">
+    <value>Report problem</value>
+  </data>
+  <data name="UpdateSnackOrder" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="OrdersCleared" xml:space="preserve">
+    <value>Order was created. Your previous ordered items have been counted and now cleared.</value>
+  </data>
+</root>

@@ -1,0 +1,22 @@
+<form class="card w-100 d-flex flex-column align-items-stretch justify-content-center gap-4 mx-auto mt-5 p-5" [formGroup]="loginForm">
+    <div class="d-flex flex-column align-items-center">
+        <img class="w-100" src="assets/inovatecLogo.svg">
+    </div>
+    <div class="d-flex flex-column align-items-stretch">
+        <label htmlFor="loginEmail">Email</label>
+        <input pInputText [style]="{ 'width':'100%' }" id="loginEmail" formControlName="email"/>
+    </div>
+    <div class="d-flex flex-column align-items-stretch">
+        <label htmlFor="loginPassword">Password</label>
+        <p-password [style]="{ 'width':'100%' }" [inputStyle]="{ 'width':'100%' }" id="loginPassword"
+            [toggleMask]="true" [feedback]="false" formControlName="password"></p-password>
+    </div>
+    <div class="w-100 d-flex flex-column align-items-stretch">
+        <button pButton class="px-4" type="submit" label="Login" [disabled]="loggingIn || !loginForm.valid" (click)="onLogin()"></button>
+    </div>
+    <a routerLink="/forgot-password" class="text-center">Forgot password?</a>
+    <div class="d-flex flex-column align-items-center">
+        <p-progressBar *ngIf="loggingIn" mode="indeterminate" class="w-100" [style]="{'height': '5px'}"></p-progressBar>
+        <p *ngIf="loginError" class="errorMessage my-0">{{ loginErrorMessage }}</p>
+    </div>
+</form>

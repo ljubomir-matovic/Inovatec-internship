@@ -1,0 +1,80 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Resources.ResourceManager" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\SupplierAdministration\SupplierAdministration-en-US.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SupplierAdministration-en-US.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\SupplierAdministration\SupplierAdministration-en-US.resx">
+      <LastGenOutput>SupplierAdministration-en-US.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Notification\Notification-en-US.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Notification\Notification-sr-Latn-RS.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ReportAdministration\ReportAdministration-en-US.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Equipment\Equipment-sr-Latn-RS.resx">
+	   <Generator></Generator>
+	</EmbeddedResource>
+	<EmbeddedResource Update="Resources\Comments\Comments-en-US.resx">
+		<Generator></Generator>
+	</EmbeddedResource>
+	<EmbeddedResource Update="Resources\Routes\Routes-en-US.resx">
+	    <Generator></Generator>
+	</EmbeddedResource>
+    <EmbeddedResource Update="Resources\Equipment\Equipment-en-US.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Equipment\Equipment-sr-Latn-RS.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Comments\Comments-en-US.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\OrderAdministration\OrderAdministration-en-US.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Routes\Routes-en-US.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ProductAdministration\ProductAdministration-en-US.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\CategoryAdministration\CategoryAdministration-en-US.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\PrimeNG\PrimeNG-en-US.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\PrimeNG\PrimeNG-sr-Latn-RS.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\UserAdministration\UserAdministration-en-US.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\UserAdministration\UserAdministration-sr-Latn-RS.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

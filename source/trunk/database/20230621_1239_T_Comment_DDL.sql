@@ -1,0 +1,30 @@
+IF(
+	EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='dbo' AND TABLE_NAME='Comment')
+)
+BEGIN
+
+	IF(
+		NOT EXISTS(SELECT 1 FROM SYS.COLUMNS WHERE Name = 'ReportId' AND Object_ID = Object_ID('dbo.Comment'))
+	)
+	BEGIN
+		ALTER TABLE [dbo].[Comment]
+		ADD [ReportId] [bigint] NULL
+
+		ALTER TABLE[dbo].[Comment]
+		ADD CONSTRAINT [FK_Comment_Report] FOREIGN KEY 
+		(
+			[ReportId]
+		)
+		REFERENCES [Report]([Id])
+	END
+	
+	IF(
+		EXISTS(SELECT 1 FROM SYS.COLUMNS WHERE Name = 'OrderId' AND Object_ID = Object_ID('dbo.Comment'))
+		AND
+		EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='dbo' AND TABLE_NAME='Order')
+	)
+	BEGIN
+		ALTER TABLE[dbo].[Comment]
+		ALTER COLUMN [OrderId] [bigint] NULL
+	END
+END
